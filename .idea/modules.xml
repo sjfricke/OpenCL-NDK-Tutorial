@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OpenCL-NDK.iml" filepath="$PROJECT_DIR$/OpenCL-NDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenCL-NDK-Tutorial.iml" filepath="$PROJECT_DIR$/OpenCL-NDK-Tutorial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

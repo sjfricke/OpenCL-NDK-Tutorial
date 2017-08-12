@@ -5,7 +5,7 @@
 #include <jni.h>
 
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS
-#include <CL/cl.h>
+#include <CL/opencl.h>
 
 #include <cstdlib>
 #include <vector>
@@ -18,8 +18,6 @@
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 #define __CL_ENABLE_EXCEPTIONS
-
-void runOpenCL();
 
 // Class to hold an instance
 class OpenCL_NDK {
@@ -38,12 +36,33 @@ public:
 
     void OnResume();
 
-    // Disconnect and stop service.
     void OnPause();
 
+    // Cache the Java VM used from the Java layer.
+  void SetJavaVM(JavaVM* java_vm) { java_vm_ = java_vm; }
+
+  double runOpenCL();
 
 private:
 
+ // Cached Java VM, caller activity object
+  JavaVM* java_vm_;
+  jobject calling_activity_obj_;
+  jmethodID on_demand_method_;
+
+  // Compute c = a + b.
+  const char *kernel_source =
+      "#pragma OPENCL EXTENSION cl_khr_fp64 : enable\n"
+          "__kernel void vecAdd(  __global double *a,\n"
+          "                       __global double *b,\n"
+          "                       __global double *c,\n"
+          "                       const unsigned int n)\n"
+          "{\n"
+          "    int id = get_global_id(0);\n"
+          "    if (id < n) {\n"
+          "        c[id] = a[id] + b[id];\n"
+          "    }\n"
+          "}\n";
 };
 
 #endif //OPENCL_NDK_OPENCL_NDK_H

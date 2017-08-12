@@ -2,7 +2,6 @@
 
 void OpenCL_NDK::OnCreate(JNIEnv* env, jobject caller_activity) {
     LOGI("OnCreate");
-    runOpenCL();
 }
 
 void OpenCL_NDK::OnResume(){
@@ -13,20 +12,7 @@ void OpenCL_NDK::OnPause() {
     LOGI("OnPause");
 }
 
-const char *kernel_source =
-"#pragma OPENCL EXTENSION cl_khr_fp64 : enable\n"
-        "__kernel void vecAdd(  __global double *a,\n"
-        "                       __global double *b,\n"
-        "                       __global double *c,\n"
-        "                       const unsigned int n)\n"
-        "{\n"
-        "    int id = get_global_id(0);\n"
-        "    if (id < n) {\n"
-        "        c[id] = a[id] + b[id];\n"
-        "    }\n"
-        "}\n";
-
-void runOpenCL() {
+double OpenCL_NDK::runOpenCL() {
 
     // Length of vectors
     unsigned int n = 100000;
@@ -144,4 +130,6 @@ void runOpenCL() {
     free(h_a);
     free(h_b);
     free(h_c);
+
+    return sum;
 }

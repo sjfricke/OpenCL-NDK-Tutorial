@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
     static {
         System.loadLibrary("opencl_ndk");
     }
+
     public native String stringFromJNI();
     public native void onCreateNDK(Activity callerActivity);
     public native void onPauseNDK();
